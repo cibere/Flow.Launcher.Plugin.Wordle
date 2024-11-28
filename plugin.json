@@ -1,0 +1,12 @@
+{
+    "ID": "",
+    "ActionKeyword": "",
+    "Name": "",
+    "Description": "",
+    "Author": "",
+    "Version": "0.0.1",
+    "Language": "python_v2",
+    "Website": "",
+    "IcoPath": "Images\\app.png",
+    "ExecuteFileName": "main.py"
+}

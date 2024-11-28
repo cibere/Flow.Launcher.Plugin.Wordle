@@ -1,0 +1,6 @@
+body:
+  - type: input
+    attributes:
+      name: settings
+      label: ...
+      description: ...
