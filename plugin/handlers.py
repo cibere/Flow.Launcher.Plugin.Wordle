@@ -68,8 +68,8 @@ class InvalidGuessLengthHandler(BaseHandler):
         assert self.plugin.game
 
         chars = len(query.text)
-        diff = 6 - chars
-        is_pos = abs(diff) == chars
+        diff = 5 - chars
+        is_pos = abs(diff) == diff
         return [
             Result(
                 f"Invalid Guess",
