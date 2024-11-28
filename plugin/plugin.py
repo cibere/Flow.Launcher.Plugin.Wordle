@@ -1,13 +1,16 @@
+import logging
+import random
+
 from flogin import Plugin
+
 from .core import WordleGame
 from .handlers import (
     InvalidGuessLengthHandler,
     RepeatGuessHandler,
     StartGameHandler,
     ValidGuessHandler,
-    WordNotExistHandler
+    WordNotExistHandler,
 )
-import logging, random
 
 log = logging.getLogger(__name__)
 

@@ -5,8 +5,9 @@ from typing import TYPE_CHECKING, Unpack
 from flogin import ExecuteResponse, Query, Result
 from flogin.jsonrpc.results import ResultConstructorArgs
 
-from .errors import CorrectGuess, OutOfGuesses
 from .enums import StatusEnum
+from .errors import CorrectGuess, OutOfGuesses
+
 if TYPE_CHECKING:
     from .plugin import WordlePlugin
 
@@ -19,7 +20,7 @@ class MakeGuessResult(Result):
             title=f"Guess {query.text}?",
             sub=f"Remaining Guesses: {remaining_guesses}",
             icon="Images/qmark.png",
-            score=100000
+            score=100000,
         )
         self.query = query
 
@@ -88,6 +89,7 @@ class StartGameResult(Result):
 
         return ExecuteResponse(hide=False)
 
+
 class PastGuess(Result):
     def __init__(self, guess_chars: list[tuple[str, StatusEnum]], score: int) -> None:
         word = ""
@@ -98,4 +100,9 @@ class PastGuess(Result):
             if status == StatusEnum.yellow:
                 highlight_data.append(idx)
 
-        super().__init__(word, title_highlight_data=highlight_data, sub="Yellow characters are highlighted.", score=score)
+        super().__init__(
+            word,
+            title_highlight_data=highlight_data,
+            sub="Yellow characters are highlighted.",
+            score=score,
+        )

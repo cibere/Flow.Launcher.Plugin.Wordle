@@ -1,8 +1,11 @@
-from flogin import Result
 import logging
-from .errors import CorrectGuess, InvalidGuess, OutOfGuesses, RepeatGuess
+
+from flogin import Result
+
 from .enums import StatusEnum
+from .errors import CorrectGuess, InvalidGuess, OutOfGuesses, RepeatGuess
 from .results import PastGuess
+
 log = logging.getLogger(__name__)
 
 
@@ -57,7 +60,7 @@ class WordleGame:
             else:
                 guess_data.append((char, StatusEnum.black))
                 self.blacks.add(char)
-            
+
         self.guesses.append(PastGuess(guess_data, len(self.guesses)))
 
         if len(self.guesses) == 6:
@@ -72,7 +75,13 @@ class WordleGame:
             Result(
                 " ".join([char if char else "_" for char in self.greens]),
                 icon="Images/green_circle.png",
-                score=50
+                score=50,
             ),
-            Result(querty, icon="Images/black_circle.png", score=40, title_highlight_data=black_highlight_data, sub="Characters that could still be or are in the word are highlighted."),
+            Result(
+                querty,
+                icon="Images/black_circle.png",
+                score=40,
+                title_highlight_data=black_highlight_data,
+                sub="Characters that could still be or are in the word are highlighted.",
+            ),
         ] + self.guesses

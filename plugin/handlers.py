@@ -79,6 +79,7 @@ class InvalidGuessLengthHandler(BaseHandler):
             )
         ] + self.plugin.game.generate_state_results()
 
+
 class WordNotExistHandler(BaseHandler):
     def condition(self, query: Query) -> bool:
         return (
@@ -96,7 +97,7 @@ class WordNotExistHandler(BaseHandler):
                 f"Invalid Word",
                 score=100,
                 icon="Images/error.png",
-                sub=f"Remaining Guesses: {self.plugin.game.remaining_guesses}"
+                sub=f"Remaining Guesses: {self.plugin.game.remaining_guesses}",
             )
         ] + self.plugin.game.generate_state_results()
 
