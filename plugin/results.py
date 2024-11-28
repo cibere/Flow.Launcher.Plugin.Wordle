@@ -19,6 +19,7 @@ class MakeGuessResult(Result):
             title=f"Guess {query.text}?",
             sub=f"Remaining Guesses: {remaining_guesses}",
             icon="Images/qmark.png",
+            score=100000
         )
         self.query = query
 
@@ -36,7 +37,7 @@ class MakeGuessResult(Result):
                     self.query,
                     title=f"You ran out of guesses, game over.",
                     sub="Click to start a new game",
-                    score=10,
+                    score=100000,
                 )
             )
             results.append(
@@ -53,7 +54,7 @@ class MakeGuessResult(Result):
                     self.query,
                     title=f"You guessed it!",
                     sub="Click to start a new game",
-                    score=10,
+                    score=100000,
                 )
             )
             self.plugin.game = None
@@ -88,7 +89,7 @@ class StartGameResult(Result):
         return ExecuteResponse(hide=False)
 
 class PastGuess(Result):
-    def __init__(self, guess_chars: list[tuple[str, StatusEnum]]) -> None:
+    def __init__(self, guess_chars: list[tuple[str, StatusEnum]], score: int) -> None:
         word = ""
         highlight_data = []
         for idx, charinfo in enumerate(guess_chars):
@@ -97,4 +98,4 @@ class PastGuess(Result):
             if status == StatusEnum.yellow:
                 highlight_data.append(idx)
 
-        super().__init__(word, title_highlight_data=highlight_data, sub="Yellow characters are highlighted.")
+        super().__init__(word, title_highlight_data=highlight_data, sub="Yellow characters are highlighted.", score=score)

@@ -58,7 +58,7 @@ class WordleGame:
                 guess_data.append((char, StatusEnum.black))
                 self.blacks.add(char)
             
-        self.guesses.append(PastGuess(guess_data))
+        self.guesses.append(PastGuess(guess_data, len(self.guesses)))
 
         if len(self.guesses) == 6:
             raise OutOfGuesses()
@@ -68,6 +68,7 @@ class WordleGame:
             Result(
                 " ".join([char if char else "_" for char in self.greens]),
                 icon="Images/green_circle.png",
+                score=50
             ),
-            Result("".join(self.blacks), icon="Images/black_circle.png"),
+            Result("".join(self.blacks), icon="Images/black_circle.png", score=40),
         ] + self.guesses
