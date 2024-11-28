@@ -37,17 +37,17 @@ class MakeGuessResult(Result):
                     self.query,
                     title=f"You ran out of guesses, game over.",
                     sub="Click to start a new game",
-                    score=100000,
+                    score=100001,
                 )
             )
             results.append(
                 Result(
                     f"The word was: {self.plugin.game.word}",
                     copy_text=self.plugin.game.word,
-                    score=9,
+                    score=100000,
                 )
             )
-            results.extend(self.plugin.game.generate_state_results())
+            self.plugin.game = None
         except CorrectGuess:
             results.append(
                 StartGameResult(

@@ -64,11 +64,15 @@ class WordleGame:
             raise OutOfGuesses()
 
     def generate_state_results(self) -> list[Result]:
+        querty = "qwertyuiopasdfghjklzxcvbnm"
+        black_highlight_data = [x for x in range(len(querty) + 1)]
+        for char in self.blacks:
+            black_highlight_data.remove(querty.index(char))
         return [
             Result(
                 " ".join([char if char else "_" for char in self.greens]),
                 icon="Images/green_circle.png",
                 score=50
             ),
-            Result("".join(self.blacks), icon="Images/black_circle.png", score=40),
+            Result(querty, icon="Images/black_circle.png", score=40, title_highlight_data=black_highlight_data, sub="Characters that could still be or are in the word are highlighted."),
         ] + self.guesses

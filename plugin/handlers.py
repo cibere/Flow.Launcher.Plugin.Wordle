@@ -48,7 +48,7 @@ class RepeatGuessHandler(BaseHandler):
         return [
             Result(
                 f"Invalid Guess",
-                sub=f"You already guessed {query.text}",
+                sub=f"You already guessed {query.text}. Remaining Guesses: {self.plugin.game.remaining_guesses}",
                 score=100,
                 icon="Images/error.png",
             )
@@ -73,7 +73,7 @@ class InvalidGuessLengthHandler(BaseHandler):
         return [
             Result(
                 f"Invalid Guess",
-                sub=f"Your guess is {chars} characters too {'short' if is_pos else 'long'}",
+                sub=f"Your guess is {abs(diff)} characters too {'short' if is_pos else 'long'}. Remaining Guesses: {self.plugin.game.remaining_guesses}",
                 score=100,
                 icon="Images/error.png",
             )
@@ -96,6 +96,7 @@ class WordNotExistHandler(BaseHandler):
                 f"Invalid Word",
                 score=100,
                 icon="Images/error.png",
+                sub=f"Remaining Guesses: {self.plugin.game.remaining_guesses}"
             )
         ] + self.plugin.game.generate_state_results()
 
