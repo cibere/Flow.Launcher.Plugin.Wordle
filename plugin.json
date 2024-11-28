@@ -1,12 +1,12 @@
 {
-    "ID": "",
-    "ActionKeyword": "",
-    "Name": "",
-    "Description": "",
-    "Author": "",
+    "ID": "32dcd763-f8ad-4f14-b000-fcf0884f0093",
+    "ActionKeyword": "test",
+    "Name": "Wordle",
+    "Description": "A basic template for creating a flow launcher plugin using flogin",
+    "Author": "cibere",
     "Version": "0.0.1",
     "Language": "python_v2",
-    "Website": "",
-    "IcoPath": "Images\\app.png",
+    "Website": "https://github.com/cibere/Flow.Launcher.Plugin.Wordle",
+    "IcoPath": "Images/app.png",
     "ExecuteFileName": "main.py"
 }
