@@ -1,0 +1,11 @@
+body:
+  - type: dropdown
+    attributes:
+      name: black_letters_display_type
+      label: How should I display the black letters?
+      description: How should I display the black letters?
+      defaultValue: Qwerty
+      options:
+        - Qwerty
+        - ABC...
+        - Only known blacks
