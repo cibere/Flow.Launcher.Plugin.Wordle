@@ -2,7 +2,7 @@ from __future__ import annotations
 
 from typing import TYPE_CHECKING, Unpack
 
-from flogin import ExecuteResponse, Query, Result, Glyph
+from flogin import ExecuteResponse, Glyph, Query, Result
 from flogin.jsonrpc.results import ResultConstructorArgs
 
 from .enums import StatusEnum
@@ -46,7 +46,8 @@ class MakeGuessResult(Result):
                     f"The word was: {self.plugin.game.word}",
                     copy_text=self.plugin.game.word,
                     score=100000,
-                    icon="Images/app.png", rounded_icon=True
+                    icon="Images/app.png",
+                    rounded_icon=True,
                 )
             )
             self.plugin.game = None
@@ -77,8 +78,8 @@ class StartGameResult(Result):
 
         if "icon" not in kwargs:
             kwargs["icon"] = "Images/app.png"
-            kwargs['rounded_icon'] = True # type: ignore # ResultConstructorArgs is outdated the version of flogin that this repo has pinned
-            
+            kwargs["rounded_icon"] = True  # type: ignore # ResultConstructorArgs is outdated the version of flogin that this repo has pinned
+
         super().__init__(**kwargs)
 
     async def callback(self):
@@ -114,5 +115,5 @@ class PastGuess(Result):
             title_highlight_data=highlight_data,
             sub="Yellow characters are highlighted.",
             score=idx,
-            icon=Glyph(f"#{idx + 1}", "Calibri")
+            icon=Glyph(f"#{idx + 1}", "Calibri"),
         )

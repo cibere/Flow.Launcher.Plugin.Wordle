@@ -1,10 +1,11 @@
 from __future__ import annotations
-from typing import TYPE_CHECKING, Any
+
 import logging
+from typing import TYPE_CHECKING, Any
 
-from flogin import Result, Glyph
+from flogin import Glyph, Result
 
-from .enums import StatusEnum, DisplayBlackSettingEnum
+from .enums import DisplayBlackSettingEnum, StatusEnum
 from .errors import CorrectGuess, InvalidGuess, OutOfGuesses, RepeatGuess
 from .results import PastGuess
 
@@ -13,8 +14,9 @@ log = logging.getLogger(__name__)
 if TYPE_CHECKING:
     from .plugin import WordlePlugin
 
+
 class WordleGame:
-    def __init__(self, word: str,plugin: WordlePlugin) -> None:
+    def __init__(self, word: str, plugin: WordlePlugin) -> None:
         self.word = word
         self.guesses: list[PastGuess] = []
         self.blacks: set[str] = set()
@@ -72,42 +74,42 @@ class WordleGame:
             raise OutOfGuesses()
 
     def generate_state_results(self) -> list[Result]:
-        black_kwargs: dict[str, Any] = {
-            "icon": "Images/black_circle.png",
-            "score": 40
-        }
+        black_kwargs: dict[str, Any] = {"icon": "Images/black_circle.png", "score": 40}
         match DisplayBlackSettingEnum(self.plugin.settings.black_letters_display_type):
             case DisplayBlackSettingEnum.querty:
                 black_title = "qwertyuiopasdfghjklzxcvbnm"
                 black_highlight_data = [x for x in range(len(black_title) + 1)]
                 for char in self.blacks:
                     black_highlight_data.remove(black_title.index(char))
-                black_kwargs.update({
-                    "sub": "Characters that could still be or are in the word are highlighted.",
-                    "title_highlight_data": black_highlight_data
-                })
+                black_kwargs.update(
+                    {
+                        "sub": "Characters that could still be or are in the word are highlighted.",
+                        "title_highlight_data": black_highlight_data,
+                    }
+                )
             case DisplayBlackSettingEnum.abc:
                 black_title = "abcdefghijklmnopqrstuvwxyz"
                 black_highlight_data = [x for x in range(len(black_title) + 1)]
                 for char in self.blacks:
                     black_highlight_data.remove(black_title.index(char))
-                black_kwargs.update({
-                    "sub": "Characters that could still be or are in the word are highlighted.",
-                    "title_highlight_data": black_highlight_data
-                })
+                black_kwargs.update(
+                    {
+                        "sub": "Characters that could still be or are in the word are highlighted.",
+                        "title_highlight_data": black_highlight_data,
+                    }
+                )
             case DisplayBlackSettingEnum.only_blacks:
                 black_title = "".join(self.blacks)
             case other:
-                raise RuntimeError(f"what am i supposed to do with {other!r}? It's not in {DisplayBlackSettingEnum!r}.")
-            
+                raise RuntimeError(
+                    f"what am i supposed to do with {other!r}? It's not in {DisplayBlackSettingEnum!r}."
+                )
+
         return [
             Result(
                 " ".join([char if char else "_" for char in self.greens]),
                 icon="Images/green_circle.png",
                 score=50,
             ),
-            Result(
-                black_title,
-                **black_kwargs
-            ),
+            Result(black_title, **black_kwargs),
         ] + self.guesses
