@@ -1,6 +1,6 @@
 {
     "ID": "32dcd763-f8ad-4f14-b000-fcf0884f0093",
-    "ActionKeyword": "test",
+    "ActionKeyword": "wordle",
     "Name": "Wordle",
     "Description": "An implimentation of the popular nytimes game called wordle for flow launcher",
     "Author": "cibere",
