@@ -2,7 +2,7 @@
     "ID": "32dcd763-f8ad-4f14-b000-fcf0884f0093",
     "ActionKeyword": "test",
     "Name": "Wordle",
-    "Description": "A basic template for creating a flow launcher plugin using flogin",
+    "Description": "An implimentation of the popular nytimes game called wordle for flow launcher",
     "Author": "cibere",
     "Version": "0.0.1",
     "Language": "python_v2",

@@ -1,2 +1,2 @@
-# Flow.Launcher.Plugins.FloginTemplate
-A basic template for creating a flow launcher plugin using [flogin](https://github.com/cibere/flogin)
+# Flow.Launcher.Plugin.Wordle
+An implimentation of the popular nytimes game called wordle for flow launcher
