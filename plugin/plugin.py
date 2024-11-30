@@ -23,19 +23,17 @@ class WordlePlugin(Plugin):
         super().__init__()
 
         self.register_search_handlers(
-            [
-                RepeatGuessHandler(),
-                InvalidGuessLengthHandler(),
-                WordNotExistHandler(),
-                ValidGuessHandler(),
-                StartGameHandler(),
-            ]
+            RepeatGuessHandler(),
+            InvalidGuessLengthHandler(),
+            WordNotExistHandler(),
+            ValidGuessHandler(),
+            StartGameHandler(),
         )
 
     def start_new_game(self):
         word = random.choice(self.valid_words)
         log.info(f"New game started. Word: {word}")
-        self.game = WordleGame(word)
+        self.game = WordleGame(word, self)
 
     async def start(self):
         with open("plugin/word_list.txt", "r", encoding="UTF-8") as f:
