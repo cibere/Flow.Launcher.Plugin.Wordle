@@ -46,7 +46,7 @@ class MakeGuessResult(Result):
                     f"The word was: {self.plugin.game.word}",
                     copy_text=self.plugin.game.word,
                     score=100000,
-                    #icon=Glyph(self.plugin.game.word, "Calibri")
+                    icon="Images/app.png", rounded_icon=True
                 )
             )
             self.plugin.game = None
@@ -76,7 +76,8 @@ class StartGameResult(Result):
         self.query = query
 
         if "icon" not in kwargs:
-            kwargs["icon"] = "Images/green_circle.png"
+            kwargs["icon"] = "Images/app.png"
+            kwargs['rounded_icon'] = True
         super().__init__(**kwargs)
 
     async def callback(self):
