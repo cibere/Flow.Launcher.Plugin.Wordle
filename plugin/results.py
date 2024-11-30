@@ -2,7 +2,7 @@ from __future__ import annotations
 
 from typing import TYPE_CHECKING, Unpack
 
-from flogin import ExecuteResponse, Query, Result
+from flogin import ExecuteResponse, Query, Result, Glyph
 from flogin.jsonrpc.results import ResultConstructorArgs
 
 from .enums import StatusEnum
@@ -46,6 +46,7 @@ class MakeGuessResult(Result):
                     f"The word was: {self.plugin.game.word}",
                     copy_text=self.plugin.game.word,
                     score=100000,
+                    #icon=Glyph(self.plugin.game.word, "Calibri")
                 )
             )
             self.plugin.game = None
@@ -83,26 +84,33 @@ class StartGameResult(Result):
 
         self.plugin.start_new_game()
         assert self.plugin.game
+
+        # Flow Launcher strips the raw text, so 'update_results' won't work if the user did `wordle `.
+        # so my solution is change query to `wordle`, update results, then change query to `wordle `, to control the query.
+
+        await self.plugin.api.change_query(self.query.keyword)
         await self.plugin.api.update_results(
-            self.query.raw_text, self.plugin.game.generate_state_results()
+            self.query.keyword, self.plugin.game.generate_state_results()
         )
+        await self.plugin.api.change_query(f"{self.query.keyword} ")
 
         return ExecuteResponse(hide=False)
 
 
 class PastGuess(Result):
-    def __init__(self, guess_chars: list[tuple[str, StatusEnum]], score: int) -> None:
+    def __init__(self, guess_chars: list[tuple[str, StatusEnum]], idx: int) -> None:
         word = ""
         highlight_data = []
-        for idx, charinfo in enumerate(guess_chars):
+        for cidx, charinfo in enumerate(guess_chars):
             char, status = charinfo
             word += char
             if status == StatusEnum.yellow:
-                highlight_data.append(idx)
+                highlight_data.append(cidx)
 
         super().__init__(
             word,
             title_highlight_data=highlight_data,
             sub="Yellow characters are highlighted.",
-            score=score,
+            score=idx,
+            icon=Glyph(f"#{idx + 1}", "Calibri")
         )
