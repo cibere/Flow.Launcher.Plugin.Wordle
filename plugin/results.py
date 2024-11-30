@@ -77,7 +77,8 @@ class StartGameResult(Result):
 
         if "icon" not in kwargs:
             kwargs["icon"] = "Images/app.png"
-            kwargs['rounded_icon'] = True
+            kwargs['rounded_icon'] = True # type: ignore # ResultConstructorArgs is outdated the version of flogin that this repo has pinned
+            
         super().__init__(**kwargs)
 
     async def callback(self):
