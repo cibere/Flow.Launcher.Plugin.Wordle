@@ -10,5 +10,5 @@ class StatusEnum(Enum):
 
 class DisplayBlackSettingEnum(Enum):
     querty = "Qwerty"
-    abc = "ABC"
+    abc = "ABC..."
     only_blacks = "Only known blacks"
