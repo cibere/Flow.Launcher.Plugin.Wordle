@@ -1,1 +1,7 @@
-# v0.0.1
+# v0.0.2
+
+New Features
+- Sorta implimentation of a context menu for black characters result that lets you quickly and easily choose a different display method.
+
+Bug Fixes:
+- Fix bug with choosing the `ABC` option for black letters display type erroring

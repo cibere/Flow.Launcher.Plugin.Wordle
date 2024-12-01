@@ -29,7 +29,7 @@ class ValidGuessHandler(BaseHandler):
 
         return [
             MakeGuessResult(query, self.plugin.game.remaining_guesses)
-        ] + self.plugin.game.generate_state_results()
+        ] + self.plugin.game.generate_state_results(query)
 
 
 class RepeatGuessHandler(BaseHandler):
@@ -52,7 +52,7 @@ class RepeatGuessHandler(BaseHandler):
                 score=100,
                 icon="Images/error.png",
             )
-        ] + self.plugin.game.generate_state_results()
+        ] + self.plugin.game.generate_state_results(query)
 
 
 class InvalidGuessLengthHandler(BaseHandler):
@@ -77,7 +77,7 @@ class InvalidGuessLengthHandler(BaseHandler):
                 score=100,
                 icon="Images/error.png",
             )
-        ] + self.plugin.game.generate_state_results()
+        ] + self.plugin.game.generate_state_results(query)
 
 
 class WordNotExistHandler(BaseHandler):
@@ -99,7 +99,7 @@ class WordNotExistHandler(BaseHandler):
                 icon="Images/error.png",
                 sub=f"Remaining Guesses: {self.plugin.game.remaining_guesses}",
             )
-        ] + self.plugin.game.generate_state_results()
+        ] + self.plugin.game.generate_state_results(query)
 
 
 class StartGameHandler(BaseHandler):

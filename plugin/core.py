@@ -3,11 +3,11 @@ from __future__ import annotations
 import logging
 from typing import TYPE_CHECKING, Any
 
-from flogin import Glyph, Result
+from flogin import Glyph, Result, Query
 
 from .enums import DisplayBlackSettingEnum, StatusEnum
 from .errors import CorrectGuess, InvalidGuess, OutOfGuesses, RepeatGuess
-from .results import PastGuess
+from .results import PastGuess, BlackLettersResult
 
 log = logging.getLogger(__name__)
 
@@ -73,43 +73,12 @@ class WordleGame:
         if len(self.guesses) == 6:
             raise OutOfGuesses()
 
-    def generate_state_results(self) -> list[Result]:
-        black_kwargs: dict[str, Any] = {"icon": "Images/black_circle.png", "score": 40}
-        match DisplayBlackSettingEnum(self.plugin.settings.black_letters_display_type):
-            case DisplayBlackSettingEnum.querty:
-                black_title = "qwertyuiopasdfghjklzxcvbnm"
-                black_highlight_data = [x for x in range(len(black_title) + 1)]
-                for char in self.blacks:
-                    black_highlight_data.remove(black_title.index(char))
-                black_kwargs.update(
-                    {
-                        "sub": "Characters that could still be or are in the word are highlighted.",
-                        "title_highlight_data": black_highlight_data,
-                    }
-                )
-            case DisplayBlackSettingEnum.abc:
-                black_title = "abcdefghijklmnopqrstuvwxyz"
-                black_highlight_data = [x for x in range(len(black_title) + 1)]
-                for char in self.blacks:
-                    black_highlight_data.remove(black_title.index(char))
-                black_kwargs.update(
-                    {
-                        "sub": "Characters that could still be or are in the word are highlighted.",
-                        "title_highlight_data": black_highlight_data,
-                    }
-                )
-            case DisplayBlackSettingEnum.only_blacks:
-                black_title = "".join(self.blacks)
-            case other:
-                raise RuntimeError(
-                    f"what am i supposed to do with {other!r}? It's not in {DisplayBlackSettingEnum!r}."
-                )
-
+    def generate_state_results(self, query: Query) -> list[Result]:
         return [
             Result(
                 " ".join([char if char else "_" for char in self.greens]),
                 icon="Images/green_circle.png",
                 score=50,
             ),
-            Result(black_title, **black_kwargs),
+            BlackLettersResult(setting=DisplayBlackSettingEnum(self.plugin.settings.black_letters_display_type), blacks=self.blacks, query=query),
         ] + self.guesses
