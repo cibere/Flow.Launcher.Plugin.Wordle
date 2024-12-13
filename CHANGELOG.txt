@@ -1,1 +1,4 @@
-# v0.0.1
+# v0.0.2
+
+- Update to dev version of flogin
+    - Fix bug where ghost processes use high amounts of CPU due to an improper shutdown
