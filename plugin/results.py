@@ -4,7 +4,7 @@ from typing import TYPE_CHECKING, Unpack
 
 from flogin import ExecuteResponse, Glyph, Query, Result
 from flogin.jsonrpc.results import ResultConstructorArgs
-
+import random
 from .enums import StatusEnum
 from .errors import CorrectGuess, OutOfGuesses
 
@@ -12,15 +12,14 @@ if TYPE_CHECKING:
     from .plugin import WordlePlugin
 
 
-class MakeGuessResult(Result):
-    plugin: WordlePlugin | None  # type: ignore
-
+class MakeGuessResult(Result["WordlePlugin"]):
     def __init__(self, query: Query, remaining_guesses: int) -> None:
         super().__init__(
             title=f"Guess {query.text}?",
             sub=f"Remaining Guesses: {remaining_guesses}",
             icon="Images/qmark.png",
             score=100000,
+            auto_complete_text="".join(random.choices("qweiopasdfghjklzxcvbnm", k=10))
         )
         self.query = query
 
@@ -70,15 +69,14 @@ class MakeGuessResult(Result):
         return ExecuteResponse(hide=False)
 
 
-class StartGameResult(Result):
-    plugin: WordlePlugin | None  # type: ignore
-
+class StartGameResult(Result["WordlePlugin"]):
     def __init__(self, query: Query, **kwargs: Unpack[ResultConstructorArgs]) -> None:
         self.query = query
 
         if "icon" not in kwargs:
             kwargs["icon"] = "Images/app.png"
             kwargs["rounded_icon"] = True  # type: ignore # ResultConstructorArgs is outdated the version of flogin that this repo has pinned
+        kwargs['auto_complete_text'] = "".join(random.choices("qweiopasdfghjklzxcvbnm", k=10)) # type: ignore # ResultConstructorArgs is outdated
 
         super().__init__(**kwargs)
 
@@ -100,7 +98,7 @@ class StartGameResult(Result):
         return ExecuteResponse(hide=False)
 
 
-class PastGuess(Result):
+class PastGuess(Result["WordlePlugin"]):
     def __init__(self, guess_chars: list[tuple[str, StatusEnum]], idx: int) -> None:
         word = ""
         highlight_data = []
@@ -115,5 +113,6 @@ class PastGuess(Result):
             title_highlight_data=highlight_data,
             sub="Yellow characters are highlighted.",
             score=idx,
-            icon=Glyph(f"#{idx + 1}", "Calibri"),
+            glyph=Glyph(f"#{idx + 1}", "Calibri"),
+            auto_complete_text="".join(random.choices("qweiopasdfghjklzxcvbnm", k=10))
         )
