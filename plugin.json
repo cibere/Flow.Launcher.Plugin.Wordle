@@ -4,9 +4,9 @@
     "Name": "Wordle",
     "Description": "An implimentation of the popular nytimes game called wordle for flow launcher",
     "Author": "cibere",
-    "Version": "0.0.3",
+    "Version": "0.1.0",
     "Language": "python_v2",
     "Website": "https://github.com/cibere/Flow.Launcher.Plugin.Wordle",
-    "IcoPath": "Images/app.png",
+    "IcoPath": "assets/app.png",
     "ExecuteFileName": "main.py"
 }
