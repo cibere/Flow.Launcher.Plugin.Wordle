@@ -28,7 +28,7 @@ class GuessHandler(BaseHandler):
         assert self.plugin.game
 
         try:
-            self.plugin.game.validate_guess(query.text)
+            self.plugin.game.validate_guess(query.text, raise_error=True)
         except InvalidGuessLength:
             chars = len(query.text)
             diff = 5 - chars
