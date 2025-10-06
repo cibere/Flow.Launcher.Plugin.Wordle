@@ -125,10 +125,10 @@ class WordleGame:
                 self._black_chars.add(char)
 
         self._guesses[guess] = guess_data
-        
+
         if guess == self.word:
             return True
-        
+
         if len(self._guesses) == self.amount_of_guesses:
             raise OutOfGuesses()
 
